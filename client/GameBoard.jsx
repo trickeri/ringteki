@@ -337,6 +337,7 @@ export class InnerGameBoard extends React.Component {
         this.setState({
             muteAudio: !this.state.muteAudio
         })
+        console.log(this.state.muteAudio);
     }
 
     onSettingsClick(event) {

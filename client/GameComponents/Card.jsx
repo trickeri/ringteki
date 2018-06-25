@@ -117,9 +117,10 @@ class Card extends React.Component {
         event.preventDefault();
         event.stopPropagation();
 
-        if (!GameBoard.audioIsMuted) {
+        {/*if (!GameBoard.audioIsMuted) {
             this.refs.cardClickSound.play();
-        }
+        }*/}
+        console.log(GameBoard.showManualMode);
 
         if(!_.isEmpty(this.props.card.menu)) {
             this.setState({ showMenu: !this.state.showMenu });
