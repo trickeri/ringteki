@@ -5,6 +5,7 @@ import $ from 'jquery';
 import 'jquery-migrate';
 import 'jquery-nearest';
 
+import GameBoard from '../GameBoard.jsx';
 import CardMenu from './CardMenu.jsx';
 import CardCounters from './CardCounters.jsx';
 
@@ -115,6 +116,10 @@ class Card extends React.Component {
     onClick(event, card) {
         event.preventDefault();
         event.stopPropagation();
+
+        if (!GameBoard.audioIsMuted) {
+            this.refs.cardClickSound.play();
+        }
 
         if(!_.isEmpty(this.props.card.menu)) {
             this.setState({ showMenu: !this.state.showMenu });
@@ -339,6 +344,9 @@ class Card extends React.Component {
                 </div>
                 { this.showMenu() ? <CardMenu menu={ this.props.card.menu } onMenuItemClick={ this.onMenuItemClick } /> : null }
                 { this.getPopup() }
+                <audio ref='cardClickSound'>
+                    <source src='/sound/Click1.mp3' type='audio/mpeg' />
+                </audio>
             </div>);
     }
 
@@ -436,9 +444,14 @@ class Card extends React.Component {
     render() {
         if(this.props.wrapped) {
             return (
-                <div className={ 'card-wrapper ' + this.getWrapper() } style={ this.props.style }>
-                    { this.getCard() }
-                    { this.getAttachments() }
+                <div>
+                    <div className={ 'card-wrapper ' + this.getWrapper() } style={ this.props.style }>
+                        { this.getCard() }
+                        { this.getAttachments() }
+                    </div>
+                    <audio ref='cardClickSound'>
+                    <source src='/sound/Click1.mp3' type='audio/mpeg' />
+                    </audio>
                 </div>);
         }
 

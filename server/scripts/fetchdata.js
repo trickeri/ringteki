@@ -32,6 +32,16 @@ let db = monk('mongodb://127.0.0.1:27017/ringteki');
 let cardService = new CardService(db);
 
 let fetchCards = apiRequest('cards')
+    /*if(imagesrc && !fs.existsSync(imagePath)) {
+        fetchImage(imagesrc, card.id, imagePath, i++ * 200);
+    } else if(card.pack_cards.length > 1 && card.pack_cards[1].image_url) {
+       var imagesrc = card.pack_cards[1].image_url;
+
+       if(imagesrc && !fs.existsSync(imagePath)) {
+          fetchImage(imagesrc, card.id, imagePath, i++ * 200);
+        }
+    }*/
+
     .then(cards => cardService.replaceCards(cards.records))
     .then(cards => {
         console.info(cards.length + ' cards fetched');

@@ -44,6 +44,7 @@ export class InnerGameBoard extends React.Component {
         this.onDynastyShuffleClick = this.onDynastyShuffleClick.bind(this);
         this.onMenuItemClick = this.onMenuItemClick.bind(this);
         this.onRingMenuItemClick = this.onRingMenuItemClick.bind(this);
+        this.onAudioMuteClick = this.onAudioMuteClick.bind(this);
         this.onManualModeClick = this.onManualModeClick.bind(this);
         this.onSettingsClick = this.onSettingsClick.bind(this);
         this.onToggleChatClick = this.onToggleChatClick.bind(this);
@@ -57,7 +58,8 @@ export class InnerGameBoard extends React.Component {
             showDynastyDeck: false,
             spectating: true,
             showActionWindowsMenu: false,
-            showCardMenu: {}
+            showCardMenu: {},
+            muteAudio: false
         };
     }
 
@@ -328,6 +330,13 @@ export class InnerGameBoard extends React.Component {
 
     onTimerExpired() {
         this.props.sendGameMessage('menuButton', null, 'pass');
+    }
+
+    onAudioMuteClick(event) {
+        event.preventDefault();
+        this.setState({
+            muteAudio: !this.state.muteAudio
+        })
     }
 
     onSettingsClick(event) {
@@ -630,9 +639,11 @@ export class InnerGameBoard extends React.Component {
                             sendMessage={ this.sendMessage }
                         />
                         <Controls
+                            onAudioMuteClick={this.onAudioMuteClick }
                             onSettingsClick={ this.onSettingsClick }
                             onManualModeClick={ this.onManualModeClick }
                             onToggleChatClick={ this.onToggleChatClick }
+                            audioIsMuted={this.state.muteAudio}
                             showChatAlert={ this.state.showChatAlert }
                             manualModeEnabled={ manualMode }
                             showManualMode={ !this.state.spectating }

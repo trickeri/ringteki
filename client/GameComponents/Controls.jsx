@@ -8,6 +8,12 @@ class Controls extends React.Component {
         return (
             <div className='controls panel'>
                 <button
+                    className={ 'btn btn-transparent' }
+                    onClick={ this.props.onAudioMuteClick}
+                    >
+                    <span className='glyphicon glyphicon-volume-up' />
+                </button>
+                <button
                     className={ 'btn btn-transparent' + (this.props.showChatAlert ? ' with-alert' : '') }
                     onClick={ this.props.onToggleChatClick }
                 >
@@ -36,6 +42,8 @@ class Controls extends React.Component {
 
 Controls.displayName = 'Controls';
 Controls.propTypes = {
+    toggleAudioMuted: PropTypes.bool,
+    onAudioMuteClick: PropTypes.func,
     manualModeEnabled: PropTypes.bool,
     onManualModeClick: PropTypes.func,
     onSettingsClick: PropTypes.func,

@@ -218,7 +218,7 @@ class InnerPendingGame extends React.Component {
             <div>
                 <audio ref='notification'>
                     <source src='/sound/charge.mp3' type='audio/mpeg' />
-                    <source src='/sound/charge.ogg' type='audio/ogg' />
+                    {/* <source src='/sound/charge.ogg' type='audio/ogg' /> */}
                 </audio>
                 <div className='panel-title text-center'>
                     { this.props.currentGame.name }
