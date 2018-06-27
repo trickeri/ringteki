@@ -65,6 +65,10 @@ export class InnerGameBoard extends React.Component {
 
     componentDidMount() {
         this.updateContextMenu(this.props);
+
+        if (!this.props.muteAudio) {
+            this.refs.gameStartSound.play();
+        }
     }
 
     componentWillReceiveProps(props) {
@@ -545,7 +549,10 @@ export class InnerGameBoard extends React.Component {
                     </div>
                 }
                 <audio ref='cardClickSound'>
-                <source src='/sound/Click1.mp3' type='audio/mpeg' />
+                <source src='/sound/CardClick1.mp3' type='audio/mpeg' />
+                </audio>
+                <audio ref='gameStartSound'>
+                <source src='/sound/StartOfRound1.mp3' type='audio/mpeg' />
                 </audio>
                 <div className='main-window'>
                     { this.renderSidebar(thisPlayer, otherPlayer) }

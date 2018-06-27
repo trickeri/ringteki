@@ -24,6 +24,9 @@ class MenuCommands {
             case 'addfate':
                 game.addMessage('{0} adds a fate to {1}', player, card);
                 card.modifyFate(1);
+                console.log('asdfasdf');
+                var addFateSound = new Audio('/sound/PlacingFate.mp3');
+                addFateSound.play();
                 break;
             case 'remfate':
                 game.addMessage('{0} removes a fate from {1}', player, card);
@@ -99,6 +102,9 @@ class MenuCommands {
             case 'addfate':
                 game.addMessage('{0} adds a fate to the {1} ring', player, ring.element);
                 ring.modifyFate(1);
+                console.log('asdfasdf');
+                var addFateSound = new Audio('/sound/PlacingFate.mp3');
+                addFateSound.play();
                 break;
             case 'remfate':
                 game.addMessage('{0} removes a fate from the {1} ring', player, ring.element);
