@@ -4,14 +4,19 @@ import PropTypes from 'prop-types';
 class Controls extends React.Component {
     render() {
         const laptopSize = window.innerWidth <= 1366;
+        let audioGlyphIcon;
+
+        if (this.props.toggleAudioMuted) {
+            audioGlyphIcon = <span className='glyphicon glyphicon-volume-off' />;
+        } else {
+            audioGlyphIcon = <span className='glyphicon glyphicon-volume-up' />
+        }
 
         return (
             <div className='controls panel'>
-                <button
-                    className={ 'btn btn-transparent' }
-                    onClick={ this.props.onAudioMuteClick}
-                    >
-                    <span className='glyphicon glyphicon-volume-up' />
+                <button className={ 'btn btn-transparent ' + (this.props.toggleAudioMuted ? 'auto' : 'manual')} 
+                onClick={ this.props.onAudioMuteClick}>
+                    {audioGlyphIcon}
                 </button>
                 <button
                     className={ 'btn btn-transparent' + (this.props.showChatAlert ? ' with-alert' : '') }

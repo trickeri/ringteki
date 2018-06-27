@@ -59,7 +59,7 @@ export class InnerGameBoard extends React.Component {
             spectating: true,
             showActionWindowsMenu: false,
             showCardMenu: {},
-            muteAudio: false
+            muteAudio: false,
         };
     }
 
@@ -202,6 +202,10 @@ export class InnerGameBoard extends React.Component {
     onCardClick(card) {
         if(card && card.uuid) {
             this.props.sendGameMessage('cardClicked', card.uuid);
+
+            if (!this.state.muteAudio) {
+                this.refs.cardClickSound.play();
+            }
         } else if(card.location && card.controller) {
             this.props.sendGameMessage('facedownCardClicked', card.location, card.controller, card.isProvince);
         }
@@ -334,10 +338,10 @@ export class InnerGameBoard extends React.Component {
 
     onAudioMuteClick(event) {
         event.preventDefault();
+
         this.setState({
             muteAudio: !this.state.muteAudio
         })
-        console.log(this.state.muteAudio);
     }
 
     onSettingsClick(event) {
@@ -540,6 +544,9 @@ export class InnerGameBoard extends React.Component {
                         />
                     </div>
                 }
+                <audio ref='cardClickSound'>
+                <source src='/sound/Click1.mp3' type='audio/mpeg' />
+                </audio>
                 <div className='main-window'>
                     { this.renderSidebar(thisPlayer, otherPlayer) }
                     <div className='board-middle'>
@@ -644,7 +651,7 @@ export class InnerGameBoard extends React.Component {
                             onSettingsClick={ this.onSettingsClick }
                             onManualModeClick={ this.onManualModeClick }
                             onToggleChatClick={ this.onToggleChatClick }
-                            audioIsMuted={this.state.muteAudio}
+                            toggleAudioMuted={this.state.muteAudio}
                             showChatAlert={ this.state.showChatAlert }
                             manualModeEnabled={ manualMode }
                             showManualMode={ !this.state.spectating }
