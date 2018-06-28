@@ -71,6 +71,10 @@ export class InnerGameBoard extends React.Component {
         }
     }
 
+    componentDidUpdate() {
+        this.setPreviousImperialFavor();
+    }
+
     componentWillReceiveProps(props) {
         this.updateContextMenu(props);
         this.notifyOfNewMessages(props);
@@ -377,8 +381,12 @@ export class InnerGameBoard extends React.Component {
         </div>);
     }
 
-    setPrievousImperialFavor() {
-        this.props.previousImperialFavor = this.state.currentGame.imperialFavor;
+    setPreviousImperialFavor() {
+        {/*this.props.previousImperialFavor = this.props.currentGame.players[this.props.username].imperialFavor;*/}
+        if (this.props.currentGame.players[this.props.username] != "") {
+            thisPlayer = _.toArray(this.props.currentGame.players)[0];
+            console.log(thisPlayer.imperialFavor);
+        }
     }
 
     renderSidebar(thisPlayer, otherPlayer) {
@@ -516,10 +524,11 @@ export class InnerGameBoard extends React.Component {
             thisPlayerCards.push(<div className='card-row' key={ 'other-empty' + i } />);
         }
 
-        let currentImperialFavor2 = this.props.currentImperialFavor;
-        let previousImperialFavor2 = this.props.previousImperialFavor;
-        if (currentImperialFavor2 != previousImperialFavor2) {
-            console.log('yolo');
+        if (thisPlayer) {
+            let currentImperialFavorTemp = thisPlayer.imperialFavor;
+            if (currentImperialFavorTemp != this.props.previousImperialFavor) {
+                {/*console.log(currentImperialFavorTemp);*/}
+            }
         }
 
         let popup = (
@@ -720,8 +729,7 @@ function mapStateToProps(state) {
         currentGame: state.games.currentGame,
         socket: state.socket.socket,
         user: state.auth.user,
-        username: state.auth.username,
-        currentImperialFavor: state.games.currentGame.imperialFavor
+        username: state.auth.username
     };
 }
 
