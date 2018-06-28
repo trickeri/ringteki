@@ -377,6 +377,10 @@ export class InnerGameBoard extends React.Component {
         </div>);
     }
 
+    setPrievousImperialFavor() {
+        this.props.previousImperialFavor = this.state.currentGame.imperialFavor;
+    }
+
     renderSidebar(thisPlayer, otherPlayer) {
         return (
             <div className='province-pane'>
@@ -512,6 +516,12 @@ export class InnerGameBoard extends React.Component {
             thisPlayerCards.push(<div className='card-row' key={ 'other-empty' + i } />);
         }
 
+        let currentImperialFavor2 = this.props.currentImperialFavor;
+        let previousImperialFavor2 = this.props.previousImperialFavor;
+        if (currentImperialFavor2 != previousImperialFavor2) {
+            console.log('yolo');
+        }
+
         let popup = (
             <div id='settings-modal' ref='modal' className='modal fade' tabIndex='-1' role='dialog'>
                 <div className='modal-dialog' role='document'>
@@ -553,6 +563,9 @@ export class InnerGameBoard extends React.Component {
                 </audio>
                 <audio ref='gameStartSound'>
                 <source src='/sound/StartOfRound1.mp3' type='audio/mpeg' />
+                </audio>
+                <audio ref='imperialFavorGainedSound'>
+                <source src='/sound/ImperialFavorGiven.mp3' type='audio/mpeg' />
                 </audio>
                 <div className='main-window'>
                     { this.renderSidebar(thisPlayer, otherPlayer) }
@@ -696,7 +709,9 @@ InnerGameBoard.propTypes = {
     socket: PropTypes.object,
     user: PropTypes.object,
     username: PropTypes.string,
-    zoomCard: PropTypes.func
+    zoomCard: PropTypes.func,
+    currentImperialFavor: PropTypes.string,
+    previousImperialFavor: PropTypes.string
 };
 
 function mapStateToProps(state) {
@@ -705,7 +720,8 @@ function mapStateToProps(state) {
         currentGame: state.games.currentGame,
         socket: state.socket.socket,
         user: state.auth.user,
-        username: state.auth.username
+        username: state.auth.username,
+        currentImperialFavor: state.games.currentGame.imperialFavor
     };
 }
 

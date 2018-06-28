@@ -19,8 +19,6 @@ class EndRoundPrompt extends PlayerOrderPrompt {
             return false;
         }
 
-        var endOfRoundSound = new Audio('/sound/ImperialFavorGiven.mp3');
-        endOfRoundSound.play();
         this.completePlayer();
     }
 }
