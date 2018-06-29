@@ -60,6 +60,7 @@ export class InnerGameBoard extends React.Component {
             showActionWindowsMenu: false,
             showCardMenu: {},
             muteAudio: false,
+            currentImperialFavor: ""
         };
     }
 
@@ -71,8 +72,11 @@ export class InnerGameBoard extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        this.setPreviousImperialFavor();
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.currentGame.players[this.props.username].imperialFavor != 
+            prevProps.currentGame.players[this.props.username].imperialFavor) {
+                this.refs.imperialFavorGainedSound.play();
+        }
     }
 
     componentWillReceiveProps(props) {
@@ -381,14 +385,6 @@ export class InnerGameBoard extends React.Component {
         </div>);
     }
 
-    setPreviousImperialFavor() {
-        {/*this.props.previousImperialFavor = this.props.currentGame.players[this.props.username].imperialFavor;*/}
-        if (this.props.currentGame.players[this.props.username] != "") {
-            thisPlayer = _.toArray(this.props.currentGame.players)[0];
-            console.log(thisPlayer.imperialFavor);
-        }
-    }
-
     renderSidebar(thisPlayer, otherPlayer) {
         return (
             <div className='province-pane'>
@@ -522,13 +518,6 @@ export class InnerGameBoard extends React.Component {
 
         for(let i = otherPlayerCards.length; i < 2; i++) {
             thisPlayerCards.push(<div className='card-row' key={ 'other-empty' + i } />);
-        }
-
-        if (thisPlayer) {
-            let currentImperialFavorTemp = thisPlayer.imperialFavor;
-            if (currentImperialFavorTemp != this.props.previousImperialFavor) {
-                {/*console.log(currentImperialFavorTemp);*/}
-            }
         }
 
         let popup = (
@@ -718,9 +707,7 @@ InnerGameBoard.propTypes = {
     socket: PropTypes.object,
     user: PropTypes.object,
     username: PropTypes.string,
-    zoomCard: PropTypes.func,
-    currentImperialFavor: PropTypes.string,
-    previousImperialFavor: PropTypes.string
+    zoomCard: PropTypes.func
 };
 
 function mapStateToProps(state) {
